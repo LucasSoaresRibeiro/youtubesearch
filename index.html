@@ -56,8 +56,10 @@
             return urlParams.get(name);
         }
 
-        function updateUrl() {
+        function updateUrl(event) {
             window.location.href = location.protocol + '//' + location.host + location.pathname + "?searchText=" + document.getElementById('searchText').value;
+            event.stopPropagation();
+            event.preventDefault();
         }
 
         window.onload = async function() {
@@ -78,8 +80,10 @@
     <h1>IBMaranata - Pesquisa de Transcrição do YouTube</h1>
     <div id="info"></div>
     <br>
-    <input type="text" id="searchText" style="width: 50%; height: 20px;" placeholder="Digite o texto para pesquisar">
-    <button onclick="updateUrl()">Pesquisar</button>
+    <form onsubmit="updateUrl(event)">
+        <input type="text" id="searchText" style="width: 50%; height: 20px;" placeholder="Digite o texto para pesquisar">
+        <input type="submit" value="Pesquisar">
+    </form>
     <p>Dica: Digite textos curtos para encontrar mais resultados</p>
     <div id="results"></div>
 </body>
