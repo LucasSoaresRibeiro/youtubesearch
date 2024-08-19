@@ -42,7 +42,9 @@ def obter_transcricoes(canal_url):
         except Exception as e:
             print(e)
 
+    counter = 0
     for video_url in video_urls:
+        counter += 1
         driver.get(video_url)
         try:
             # Espera até que as legendas estejam disponíveis
@@ -82,12 +84,18 @@ def obter_transcricoes(canal_url):
             with open('transcricoes.json', 'w', encoding='utf-8') as f:
                 json.dump(transcricoes, f, ensure_ascii=False, indent=4)
 
+            print(f'Parcial de transcrições cadastradas: {len(transcricoes)}')
+
         except Exception as e:
             print(f'Erro ao obter a transcrição do vídeo {video_url}: {e}')
         # finally:
         #     driver.back()
 
+        print(f'Processando video {counter}/{len(video_url)}')
+
     driver.quit()
+
+    print(f'Total de transcrições cadastradas: {len(transcricoes)}')
 
 # Exemplo de uso
 URL_DO_CANAL = 'https://www.youtube.com/@IBMaranata/streams'
