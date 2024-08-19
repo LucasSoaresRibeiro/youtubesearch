@@ -18,7 +18,7 @@
         async function searchTranscription(updateUrl) {
             const data = await fetchData();
             if (updateUrl) {
-                window.location.href = "http://127.0.0.1:5500/index.html?searchText=" + document.getElementById('searchText').value;
+                window.location.href = location.protocol + '//' + location.host + location.pathname + "?searchText=" + document.getElementById('searchText').value;
             }
             const searchText = cleanText(document.getElementById('searchText').value.toLowerCase());
             let results = [];
