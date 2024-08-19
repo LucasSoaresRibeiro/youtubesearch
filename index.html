@@ -17,11 +17,8 @@
             return text.replace(/ {2,}/g, " ");
         }
         
-        async function searchTranscription(updateUrl) {
+        async function searchTranscription() {
 
-            if (updateUrl) {
-                window.location.href = location.protocol + '//' + location.host + location.pathname + "?searchText=" + document.getElementById('searchText').value;
-            }
             const searchText = cleanText(document.getElementById('searchText').value.toLowerCase());
             let results = [];
 
@@ -59,6 +56,10 @@
             return urlParams.get(name);
         }
 
+        function updateUrl() {
+            window.location.href = location.protocol + '//' + location.host + location.pathname + "?searchText=" + document.getElementById('searchText').value;
+        }
+
         window.onload = async function() {
             
             data = await fetchData();
@@ -78,7 +79,7 @@
     <div id="info"></div>
     <br>
     <input type="text" id="searchText" style="width: 50%; height: 20px;" placeholder="Digite o texto para pesquisar">
-    <button onclick="searchTranscription(true)">Pesquisar</button>
+    <button onclick="updateUrl()">Pesquisar</button>
     <p>Dica: Digite textos curtos para encontrar mais resultados</p>
     <div id="results"></div>
 </body>
