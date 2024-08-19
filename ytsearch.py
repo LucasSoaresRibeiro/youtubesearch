@@ -84,14 +84,15 @@ def obter_transcricoes(canal_url):
             with open('transcricoes.json', 'w', encoding='utf-8') as f:
                 json.dump(transcricoes, f, ensure_ascii=False, indent=4)
 
-            print(f'Parcial de transcrições cadastradas: {len(transcricoes)}')
 
         except Exception as e:
             print(f'Erro ao obter a transcrição do vídeo {video_url}: {e}')
         # finally:
         #     driver.back()
 
-        print(f'Processando video {counter}/{len(video_url)}')
+        print('-'*20)
+        print(f'Status do processamento: {counter}/{len(video_urls)}')
+        print(f'Parcial de transcricoes cadastradas: {len(transcricoes)}')
 
     driver.quit()
 
