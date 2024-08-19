@@ -22,8 +22,8 @@ def obter_transcricoes(canal_url):
     transcricoes = []
     
     # Salva as transcrições em um arquivo JSON
-    with open('transcricoes.json', 'w', encoding='utf-8') as f:
-        json.dump(transcricoes, f, ensure_ascii=False, indent=4)
+    with open('transcricoes.json', encoding='utf-8') as fh:
+        transcricoes = json.load(fh)
 
     time.sleep(2)
 
@@ -34,17 +34,25 @@ def obter_transcricoes(canal_url):
     video_urls = []
     for video in videos:
         try:
-            video_urls.append(video.get_attribute('href'))
-            # driver.find_element(By.CSS_SELECTOR, 'button#button[aria-label="Carregar mais"]')
-            # driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            # break
+            # video_urls.append(video.get_attribute('href'))
+            video_urls.append({
+                'titulo': video.get_attribute('title'),
+                'url': video.get_attribute('href')
+            })
 
         except Exception as e:
             print(e)
 
     counter = 0
-    for video_url in video_urls:
+    for video_url_obj in video_urls:
+        
         counter += 1
+        video_url = video_url_obj['url']
+        
+        if video_url in [tr['url'] for tr in transcricoes]:
+            print(f"Ignorando video cadastrado: {video_url_obj['titulo']}")
+            continue
+
         driver.get(video_url)
         try:
             # Espera até que as legendas estejam disponíveis
@@ -76,23 +84,30 @@ def obter_transcricoes(canal_url):
             transcricao = driver.execute_script(script)
             transcricoes.append({
                 'url': video_url,
-                'titulo': driver.execute_script("return document.title"),
+                'titulo': video_url_obj['titulo'],
+                'possui_transcricao': True,
                 'transcricao': transcricao
             })
 
-            # Salva as transcrições em um arquivo JSON
-            with open('transcricoes.json', 'w', encoding='utf-8') as f:
-                json.dump(transcricoes, f, ensure_ascii=False, indent=4)
-
-
         except Exception as e:
             print(f'Erro ao obter a transcrição do vídeo {video_url}: {e}')
+
+            transcricoes.append({
+                'url': video_url,
+                'titulo': video_url_obj['titulo'],
+                'possui_transcricao': False,
+                'transcricao': []
+            })
         # finally:
         #     driver.back()
 
+        # Salva as transcrições em um arquivo JSON
+        with open('transcricoes.json', 'w', encoding='utf-8') as f:
+            json.dump(transcricoes, f, ensure_ascii=False, indent=4)
+
         print('-'*20)
         print(f'Status do processamento: {counter}/{len(video_urls)}')
-        print(f'Parcial de transcricoes cadastradas: {len(transcricoes)}')
+        # print(f'Parcial de transcricoes cadastradas: {len(transcricoes)}')
 
     driver.quit()
 

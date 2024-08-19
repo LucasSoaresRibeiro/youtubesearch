@@ -63,7 +63,7 @@
         window.onload = async function() {
             
             data = await fetchData();
-            document.getElementById('info').innerHTML = 'Total de videos indexados do canal: ' + data.length;
+            document.getElementById('info').innerHTML = 'Total de videos indexados: ' + data.length;
 
             const searchText = getQueryParameter('searchText');
             if (searchText) {
