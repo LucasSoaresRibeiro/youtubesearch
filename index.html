@@ -6,6 +6,8 @@
     <title>IBMaranata - Pesquisa de Transcrição do YouTube</title>
     <script>
 
+        var data;
+
         async function fetchData() {
             const response = await fetch('transcricoes.json');
             return await response.json();
@@ -16,7 +18,7 @@
         }
         
         async function searchTranscription(updateUrl) {
-            const data = await fetchData();
+            // const data = await fetchData();
             if (updateUrl) {
                 window.location.href = location.protocol + '//' + location.host + location.pathname + "?searchText=" + document.getElementById('searchText').value;
             }
@@ -57,7 +59,12 @@
             return urlParams.get(name);
         }
 
-        window.onload = function() {
+        window.onload = async function() {
+            
+            console.log("aqui");
+            data = await fetchData();
+            document.getElementById('info').innerHTML = 'Total de videos indexados do canal: ' + data.length;
+
             const searchText = getQueryParameter('searchText');
             if (searchText) {
                 document.getElementById('searchText').value = searchText;
@@ -72,6 +79,7 @@
     <input type="text" id="searchText" style="width: 50%; height: 20px;" placeholder="Digite o texto para pesquisar">
     <button onclick="searchTranscription(true)">Pesquisar</button>
     <p>Dica: Digite textos curtos para encontrar mais resultados</p>
+    <div id="info"></div>
     <div id="results"></div>
 </body>
 </html>
