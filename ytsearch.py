@@ -1,9 +1,17 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
 import time
+
+def page_down(driver):
+    for attempt in range(1, 20):
+        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
+        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
+        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
+        time.sleep(1)
 
 def obter_transcricoes(canal_url):
     # Configuração do Selenium WebDriver
@@ -12,7 +20,14 @@ def obter_transcricoes(canal_url):
 
     # Lista para armazenar as transcrições
     transcricoes = []
+    
+    # Salva as transcrições em um arquivo JSON
+    with open('transcricoes.json', 'w', encoding='utf-8') as f:
+        json.dump(transcricoes, f, ensure_ascii=False, indent=4)
+
     time.sleep(2)
+
+    page_down(driver)
 
     # Navegar pelos vídeos do canal
     videos = driver.find_elements(By.CSS_SELECTOR, 'a#video-title-link')
@@ -20,7 +35,7 @@ def obter_transcricoes(canal_url):
     for video in videos:
         try:
             video_urls.append(video.get_attribute('href'))
-            driver.find_element(By.CSS_SELECTOR, 'button#button[aria-label="Carregar mais"]')
+            # driver.find_element(By.CSS_SELECTOR, 'button#button[aria-label="Carregar mais"]')
             # driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             # break
 
@@ -59,17 +74,18 @@ def obter_transcricoes(canal_url):
             transcricao = driver.execute_script(script)
             transcricoes.append({
                 'url': video_url,
-                'data': 'video_data',
+                'titulo': driver.execute_script("return document.title"),
                 'transcricao': transcricao
             })
+
+            # Salva as transcrições em um arquivo JSON
+            with open('transcricoes.json', 'w', encoding='utf-8') as f:
+                json.dump(transcricoes, f, ensure_ascii=False, indent=4)
+
         except Exception as e:
             print(f'Erro ao obter a transcrição do vídeo {video_url}: {e}')
         # finally:
         #     driver.back()
-
-    # Salva as transcrições em um arquivo JSON
-    with open('transcricoes.json', 'w', encoding='utf-8') as f:
-        json.dump(transcricoes, f, ensure_ascii=False, indent=4)
 
     driver.quit()
 

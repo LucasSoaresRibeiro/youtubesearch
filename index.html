@@ -30,11 +30,20 @@
                         const videoId = video.url.split('v=')[1];
                         const videoTime = Math.floor(transcript.tStartMs / 1000);
                         const videoUrlWithTime = `${video.url}&t=${videoTime}s`;
+                        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
                         results.push(`
-                            <div>
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}?start=${videoTime}" frameborder="0" allowfullscreen></iframe>
-                                <p><a href="${videoUrlWithTime}" target="_blank">${transcript.text}</a></p>
+                            <div style="display:flex; gap:10px">
+                                <div style="width: 50%">
+                                    <iframe style="width: 100%" width="560" height="315" src="https://www.youtube.com/embed/${videoId}?start=${videoTime}" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                                <div style="width: 45%">
+                                    <p>${video.titulo}</p>
+                                    <img style="width: 60%" src="${thumbnailUrl}" alt="Thumbnail">
+                                    </br>
+                                    <a href="${videoUrlWithTime}" target="_blank">${transcript.text}</br>(Assistir trecho no youtube)</a>
+                                </div>
                             </div>
+                            <hr>
                         `);
                     }
                 });
