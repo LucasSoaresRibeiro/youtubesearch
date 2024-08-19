@@ -15,8 +15,11 @@
             return text.replace(/ {2,}/g, " ");
         }
         
-        async function searchTranscription() {
+        async function searchTranscription(updateUrl) {
             const data = await fetchData();
+            if (updateUrl) {
+                window.location.href = "http://127.0.0.1:5500/index.html?searchText=" + document.getElementById('searchText').value;
+            }
             const searchText = cleanText(document.getElementById('searchText').value.toLowerCase());
             let results = [];
 
@@ -29,7 +32,7 @@
                         const videoUrlWithTime = `${video.url}&t=${videoTime}s`;
                         results.push(`
                             <div>
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}?start=${videoTime}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}?si=g2oPMDN2yc_jF0aW&start=${videoTime}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                 <p><a href="${videoUrlWithTime}" target="_blank">${transcript.text}</a></p>
                             </div>
                         `);
@@ -39,12 +42,26 @@
 
             document.getElementById('results').innerHTML = results.length > 0 ? results.join('') : 'Nenhum resultado encontrado';
         }
+
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        window.onload = function() {
+            const searchText = getQueryParameter('searchText');
+            if (searchText) {
+                document.getElementById('searchText').value = searchText;
+                searchTranscription();
+            }
+        }
+
     </script>
 </head>
 <body>
     <h1>IBMaranata - Pesquisa de Transcrição do YouTube</h1>
     <input type="text" id="searchText" style="width: 50%; height: 20px;" placeholder="Digite o texto para pesquisar">
-    <button onclick="searchTranscription()">Pesquisar</button>
+    <button onclick="searchTranscription(true)">Pesquisar</button>
     <p>Dica: Digite textos curtos para encontrar mais resultados</p>
     <div id="results"></div>
 </body>
