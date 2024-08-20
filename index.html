@@ -84,6 +84,12 @@
             event.preventDefault();
         }
 
+        function share() {
+            whats_url = `https://api.whatsapp.com/send/?text=${encodeURI(window.location.href)}&type=phone_number&app_absent=0`;
+            console.log(whats_url);
+            window.open(whats_url);
+        }
+
         window.onload = async function() {
             
             dataInfo = await fetchData('info.json');
@@ -105,6 +111,7 @@
     <form onsubmit="updateUrl(event)">
         <input type="text" id="searchText" style="width: 50%; height: 20px;" placeholder="Digite o texto para pesquisar">
         <input type="submit" value="Pesquisar">
+        <button onclick="share()">Compartilhar</button>
     </form>
     <p>Dica: Digite textos curtos para encontrar mais resultados</p>
     <div id="results"></div>
