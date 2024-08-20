@@ -8,8 +8,12 @@ import time
 from datetime import datetime
 
 def save(transcricoes):
-    print('Atualizando base...')
 
+    print('Limpando transcricoes...')
+    for video_data in transcricoes:
+        video_data["transcricao"]  = [item for item in video_data["transcricao"] if item["text"] != "" and len(item["text"]) > 1]
+
+    print('Salvando resultados...')
     with open('transcricoes.json', 'w', encoding='utf-8') as f:
         json.dump(transcricoes, f, ensure_ascii=False, indent=4)
 
@@ -19,6 +23,8 @@ def save(transcricoes):
             'dataExecucao': datetime.today().strftime('%d/%m/%Y')
         }
         json.dump(info, f, ensure_ascii=False, indent=4)
+        
+    print('Salvo!')
 
 def page_down(driver):
     for attempt in range(1, 40):
