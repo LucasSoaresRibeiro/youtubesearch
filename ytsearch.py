@@ -7,8 +7,21 @@ import json
 import time
 from datetime import datetime
 
+def save(transcricoes):
+    print('Atualizando base...')
+
+    with open('transcricoes.json', 'w', encoding='utf-8') as f:
+        json.dump(transcricoes, f, ensure_ascii=False, indent=4)
+
+    with open('info.json', 'w', encoding='utf-8') as f:
+        info = {
+            'videos': len(transcricoes),
+            'dataExecucao': datetime.today().strftime('%d/%m/%Y')
+        }
+        json.dump(info, f, ensure_ascii=False, indent=4)
+
 def page_down(driver):
-    for attempt in range(1, 20):
+    for attempt in range(1, 40):
         driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
         driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
         driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
@@ -48,6 +61,10 @@ def obter_transcricoes(canal_url):
     for video_url_obj in video_urls:
         
         counter += 1
+        print('-'*20)
+        print(f'Processando {counter}/{len(video_urls)} ...')
+        # print(f'Parcial de transcricoes cadastradas: {len(transcricoes)}')
+
         video_url = video_url_obj['url']
         
         if video_url in [tr['url'] for tr in transcricoes]:
@@ -90,15 +107,8 @@ def obter_transcricoes(canal_url):
                 'transcricao': transcricao
             })
 
-            # Salva as transcrições em um arquivo JSON
-            with open('transcricoes.json', 'w', encoding='utf-8') as f:
-                json.dump(transcricoes, f, ensure_ascii=False, indent=4)
-            with open('info.json', 'w', encoding='utf-8') as f:
-                info = {
-                    'videos': len(transcricoes),
-                    'dataExecucao': datetime.today().strftime('%d/%m/%Y')
-                }
-                json.dump(info, f, ensure_ascii=False, indent=4)
+            if len(transcricoes) % 30 == 0:
+                save(transcricoes)
 
         except Exception as e:
             # print(f'Erro ao obter a transcrição do vídeo {video_url}: {e}')
@@ -111,13 +121,10 @@ def obter_transcricoes(canal_url):
                 'transcricao': []
             })
 
-        print('-'*20)
-        print(f'Status do processamento: {counter}/{len(video_urls)}')
-        # print(f'Parcial de transcricoes cadastradas: {len(transcricoes)}')
+            if len(transcricoes) % 30 == 0:
+                save(transcricoes)
 
-    # Salva as transcrições em um arquivo JSON
-    with open('transcricoes.json', 'w', encoding='utf-8') as f:
-        json.dump(transcricoes, f, ensure_ascii=False, indent=4)
+    save(transcricoes)
 
     driver.quit()
 
