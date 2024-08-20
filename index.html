@@ -7,6 +7,7 @@
     <script>
 
         var data;
+        var LIMIT_RESULTS = 20;
 
         async function fetchData() {
             const response = await fetch('transcricoes.json');
@@ -23,7 +24,17 @@
             let results = [];
 
             data.forEach(video => {
+
+                if (results.length >= LIMIT_RESULTS) {
+                    return;
+                }
+
                 video.transcricao.forEach(transcript => {
+
+                    if (results.length >= LIMIT_RESULTS) {
+                        return;
+                    }
+
                     text = cleanText(transcript.text);
                     if (text.toLowerCase().includes(searchText)) {
                         const videoId = video.url.split('v=')[1];
@@ -44,9 +55,20 @@
                             </div>
                             <hr>
                         `);
+
                     }
                 });
+
             });
+
+            if (results.length >= LIMIT_RESULTS) {
+                results.push(`
+                    <div style="display:flex; gap:10px">
+                        <p>Limite de resultados atingido</p>
+                    </div>
+                    <hr>
+                `);
+            }
 
             document.getElementById('results').innerHTML = results.length > 0 ? results.join('') : 'Nenhum resultado encontrado';
         }
