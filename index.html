@@ -9,8 +9,8 @@
         var data;
         var LIMIT_RESULTS = 20;
 
-        async function fetchData() {
-            const response = await fetch('transcricoes.json');
+        async function fetchData(fileName) {
+            const response = await fetch(fileName);
             return await response.json();
         }
 
@@ -19,7 +19,7 @@
         }
         
         async function searchTranscription() {
-
+            let data = await fetchData('transcricoes.json');
             const searchText = cleanText(document.getElementById('searchText').value.toLowerCase());
             let results = [];
 
@@ -86,8 +86,8 @@
 
         window.onload = async function() {
             
-            data = await fetchData();
-            document.getElementById('info').innerHTML = 'Total de videos indexados: ' + data.length;
+            dataInfo = await fetchData('info.json');
+            document.getElementById('info').innerHTML = 'Total de videos indexados: ' + dataInfo.videos + ' (' + dataInfo.dataExecucao + ')';
 
             const searchText = getQueryParameter('searchText');
             if (searchText) {

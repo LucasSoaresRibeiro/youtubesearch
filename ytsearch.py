@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
 import time
+from datetime import datetime
 
 def page_down(driver):
     for attempt in range(1, 20):
@@ -92,6 +93,12 @@ def obter_transcricoes(canal_url):
             # Salva as transcrições em um arquivo JSON
             with open('transcricoes.json', 'w', encoding='utf-8') as f:
                 json.dump(transcricoes, f, ensure_ascii=False, indent=4)
+            with open('info.json', 'w', encoding='utf-8') as f:
+                info = {
+                    'videos': len(transcricoes),
+                    'dataExecucao': datetime.today().strftime('%d/%m/%Y')
+                }
+                json.dump(info, f, ensure_ascii=False, indent=4)
 
         except Exception as e:
             # print(f'Erro ao obter a transcrição do vídeo {video_url}: {e}')
