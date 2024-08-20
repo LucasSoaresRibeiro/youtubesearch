@@ -7,6 +7,8 @@ import json
 import time
 from datetime import datetime
 
+REPROCESSAR_TRANSCRICOES_VAZIAS = True
+
 def save(transcricoes):
 
     print('Limpando transcricoes...')
@@ -23,7 +25,7 @@ def save(transcricoes):
             'dataExecucao': datetime.today().strftime('%d/%m/%Y')
         }
         json.dump(info, f, ensure_ascii=False, indent=4)
-        
+
     print('Salvo!')
 
 def page_down(driver):
@@ -34,6 +36,7 @@ def page_down(driver):
         time.sleep(1)
 
 def obter_transcricoes(canal_url):
+
     # Configuração do Selenium WebDriver
     driver = webdriver.Chrome()  # Certifique-se de ter o chromedriver instalado e no PATH
     driver.get(canal_url)
@@ -69,13 +72,16 @@ def obter_transcricoes(canal_url):
         counter += 1
         print('-'*20)
         print(f'Processando {counter}/{len(video_urls)} ...')
-        # print(f'Parcial de transcricoes cadastradas: {len(transcricoes)}')
 
         video_url = video_url_obj['url']
         
-        if video_url in [tr['url'] for tr in transcricoes]:
-            print(f"Ignorando video cadastrado: {video_url_obj['titulo']}")
-            continue
+        video_database = [tr for tr in transcricoes if tr['url'] == video_url]
+        if len(video_database) > 0:
+            if REPROCESSAR_TRANSCRICOES_VAZIAS == False:
+                print(f"Ignorando video cadastrado: {video_url_obj['titulo']}")
+            elif len(video_database[0]['transcricao']) > 0:
+                print(f"Ignorando video cadastrado com transcricao: {video_url_obj['titulo']}")
+                continue
 
         driver.get(video_url)
         try:
@@ -106,12 +112,18 @@ def obter_transcricoes(canal_url):
             return await logSubs('pt');
             """
             transcricao = driver.execute_script(script)
-            transcricoes.append({
-                'url': video_url,
-                'titulo': video_url_obj['titulo'],
-                'possui_transcricao': True,
-                'transcricao': transcricao
-            })
+            video_item = {
+                    'url': video_url,
+                    'titulo': video_url_obj['titulo'],
+                    'possui_transcricao': True,
+                    'transcricao': transcricao
+                }
+
+            # check for duplicates
+            if len(video_database) > 0:
+                transcricoes = [tr for tr in transcricoes if tr['url'] != video_url]
+
+            transcricoes.append(video_item)
 
             if len(transcricoes) % 30 == 0:
                 save(transcricoes)
@@ -120,12 +132,13 @@ def obter_transcricoes(canal_url):
             # print(f'Erro ao obter a transcrição do vídeo {video_url}: {e}')
             print(f'Erro ao obter a transcrição do vídeo {video_url}')
 
-            transcricoes.append({
-                'url': video_url,
-                'titulo': video_url_obj['titulo'],
-                'possui_transcricao': False,
-                'transcricao': []
-            })
+            if len(video_database) == 0:
+                transcricoes.append({
+                    'url': video_url,
+                    'titulo': video_url_obj['titulo'],
+                    'possui_transcricao': False,
+                    'transcricao': []
+                })
 
             if len(transcricoes) % 30 == 0:
                 save(transcricoes)
