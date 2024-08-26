@@ -7,7 +7,7 @@ import json
 import time
 from datetime import datetime
 
-REPROCESSAR_TRANSCRICOES_VAZIAS = True
+REPROCESSAR_TRANSCRICOES_VAZIAS = False
 
 def save(transcricoes):
 
@@ -57,7 +57,6 @@ def obter_transcricoes(canal_url):
     video_urls = []
     for video in videos:
         try:
-            # video_urls.append(video.get_attribute('href'))
             video_urls.append({
                 'titulo': video.get_attribute('title'),
                 'url': video.get_attribute('href')
@@ -79,6 +78,7 @@ def obter_transcricoes(canal_url):
         if len(video_database) > 0:
             if REPROCESSAR_TRANSCRICOES_VAZIAS == False:
                 print(f"Ignorando video cadastrado: {video_url_obj['titulo']}")
+                continue
             elif len(video_database[0]['transcricao']) > 0:
                 print(f"Ignorando video cadastrado com transcricao: {video_url_obj['titulo']}")
                 continue
@@ -123,7 +123,7 @@ def obter_transcricoes(canal_url):
             if len(video_database) > 0:
                 transcricoes = [tr for tr in transcricoes if tr['url'] != video_url]
 
-            transcricoes.append(video_item)
+            transcricoes.insert(0, video_item)
 
             if len(transcricoes) % 30 == 0:
                 save(transcricoes)
@@ -133,7 +133,7 @@ def obter_transcricoes(canal_url):
             print(f'Erro ao obter a transcrição do vídeo {video_url}')
 
             if len(video_database) == 0:
-                transcricoes.append({
+                transcricoes.insert(0, {
                     'url': video_url,
                     'titulo': video_url_obj['titulo'],
                     'possui_transcricao': False,
