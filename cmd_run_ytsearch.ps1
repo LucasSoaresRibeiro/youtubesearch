@@ -1,7 +1,7 @@
 # conda deactivate
 # conda activate base
-python ytsearch.py
-git add *
-git commit -m "feat: Auto backup"
-git push
+C:\Lucas\Programas\ArcGISPro\envs\arcgispro-clone-pro-32\python.exe ytsearch.py
+# git add *
+# git commit -m "feat: Auto backup"
+# git push
 TIMEOUT 15
