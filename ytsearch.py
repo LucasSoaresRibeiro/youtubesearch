@@ -6,13 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 import time
 from datetime import datetime
-from youtube_transcript_api import YouTubeTranscriptApi
-from youtube_transcript_api.formatters import JSONFormatter
 
 REPROCESSAR_TRANSCRICOES_VAZIAS = False
-
-ytt_api = YouTubeTranscriptApi()
-formatter = JSONFormatter()
 
 def save(transcricoes):
 
@@ -90,39 +85,33 @@ def obter_transcricoes(canal_url):
 
         driver.get(video_url)
         try:
-            # # Espera até que as legendas estejam disponíveis
-            # WebDriverWait(driver, 10).until(
-            #     EC.presence_of_element_located((By.CSS_SELECTOR, 'button.ytp-subtitles-button'))
-            # )
-            # # Ativa as legendas
-            # driver.find_element(By.CSS_SELECTOR, 'button.ytp-subtitles-button').click()
-            # time.sleep(2)  # Espera um pouco para garantir que as legendas sejam carregadas
+            # Espera até que as legendas estejam disponíveis
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'button.ytp-subtitles-button'))
+            )
+            # Ativa as legendas
+            driver.find_element(By.CSS_SELECTOR, 'button.ytp-subtitles-button').click()
+            time.sleep(2)  # Espera um pouco para garantir que as legendas sejam carregadas
 
-            # # Executa a função JavaScript para obter a transcrição
-            # script = """
-            # async function getSubs(langCode = 'pt') {
-            #     let ct = JSON.parse((await (await fetch(window.location.href)).text()).split('ytInitialPlayerResponse = ')[1].split(';var')[0]).captions.playerCaptionsTracklistRenderer.captionTracks, findCaptionUrl = x => ct.find(y => y.vssId.indexOf(x) === 0)?.baseUrl, firstChoice = findCaptionUrl("." + langCode), url = firstChoice ? firstChoice + "&fmt=json3" : (findCaptionUrl(".") || findCaptionUrl("a." + langCode) || ct[0].baseUrl) + "&fmt=json3&tlang=" + langCode;
-            #     return (await (await fetch(url)).json()).events.map(x => ({...x, text: x.segs?.map(x => x.utf8)?.join(" ")?.replace(/\\n/g,' ')?.replace(/♪|'|"|\\.{2,}|<[^>]*>|{[^}]*}|\\[[^\\]]*\\]/g,'')?.trim() || ''}));
-            # }
-            # async function logSubs(langCode) {
-            #     const subs = await getSubs(langCode);
-            #     const text = subs.map(x => (
-            #         {
-            #             tStartMs: x.tStartMs,
-            #             text: x.text
-            #         }
-            #     ));
-            #     return text;
-            # }
-            # return await logSubs('pt');
-            # """
-            # transcricao = driver.execute_script(script)
-
-            video_id = video_url.split("?v=")[1]
-            transcript = ytt_api.fetch(video_id, languages=['pt'])
-            json_string = formatter.format_transcript(transcript)
-            transcricao = json.loads(json_string)
-
+            # Executa a função JavaScript para obter a transcrição
+            script = """
+            async function getSubs(langCode = 'pt') {
+                let ct = JSON.parse((await (await fetch(window.location.href)).text()).split('ytInitialPlayerResponse = ')[1].split(';var')[0]).captions.playerCaptionsTracklistRenderer.captionTracks, findCaptionUrl = x => ct.find(y => y.vssId.indexOf(x) === 0)?.baseUrl, firstChoice = findCaptionUrl("." + langCode), url = firstChoice ? firstChoice + "&fmt=json3" : (findCaptionUrl(".") || findCaptionUrl("a." + langCode) || ct[0].baseUrl) + "&fmt=json3&tlang=" + langCode;
+                return (await (await fetch(url)).json()).events.map(x => ({...x, text: x.segs?.map(x => x.utf8)?.join(" ")?.replace(/\\n/g,' ')?.replace(/♪|'|"|\\.{2,}|<[^>]*>|{[^}]*}|\\[[^\\]]*\\]/g,'')?.trim() || ''}));
+            }
+            async function logSubs(langCode) {
+                const subs = await getSubs(langCode);
+                const text = subs.map(x => (
+                    {
+                        tStartMs: x.tStartMs,
+                        text: x.text
+                    }
+                ));
+                return text;
+            }
+            return await logSubs('pt');
+            """
+            transcricao = driver.execute_script(script)
             video_item = {
                     'url': video_url,
                     'titulo': video_url_obj['titulo'],

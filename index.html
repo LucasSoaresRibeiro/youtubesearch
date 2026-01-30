@@ -42,8 +42,7 @@
                     text = cleanText(transcript.text);
                     if (text.toLowerCase().includes(searchText)) {
                         const videoId = video.url.split('v=')[1];
-                        console.log(videoId);
-                        const videoTime = Math.floor(transcript.start);
+                        const videoTime = Math.floor(transcript.tStartMs / 1000);
                         const videoUrlWithTime = `${video.url}&t=${videoTime}s`;
                         const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
 
