@@ -22,4 +22,4 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "Nenhuma alteracao para commitar."
 }
 
-TIMEOUT 15
+Start-Sleep -Seconds 15

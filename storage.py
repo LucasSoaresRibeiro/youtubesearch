@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -8,6 +9,7 @@ from urllib.parse import parse_qs, urlparse
 DATA_DIR = Path("data")
 VIDEOS_DIR = DATA_DIR / "videos"
 MANIFEST_PATH = DATA_DIR / "manifest.json"
+BUSCA_PATH = DATA_DIR / "busca.json"
 LEGACY_PATH = Path("transcricoes.json")
 INFO_PATH = Path("info.json")
 
@@ -105,10 +107,88 @@ def limpar_transcricao(video):
     return video
 
 
+def normalizar_texto_busca(text):
+    text = text.lower()
+    text = unicodedata.normalize("NFD", text)
+    text = "".join(char for char in text if unicodedata.category(char) != "Mn")
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def montar_indice_busca(transcricao):
+    partes = []
+    segmentos = []
+    pos = 0
+
+    for item in transcricao:
+        bruto = re.sub(r" {2,}", " ", item.get("text") or "")
+        norm = normalizar_texto_busca(bruto)
+        if not norm:
+            continue
+
+        if partes:
+            pos += 1
+
+        segmentos.append([pos, int(item["tStartMs"])])
+        partes.append(norm)
+        pos += len(norm)
+
+    texto = " ".join(partes)
+    if not texto:
+        return None
+
+    return {"t": texto, "s": segmentos}
+
+
+def carregar_indice_busca():
+    if not BUSCA_PATH.exists():
+        return {"versao": 1, "itens": {}}
+
+    try:
+        return carregar_json_seguro(BUSCA_PATH)
+    except (json.JSONDecodeError, ValueError) as erro:
+        print(f"Indice de busca invalido ({erro}), recriando...")
+        return {"versao": 1, "itens": {}}
+
+
+def atualizar_entrada_indice_busca(video_id, indice):
+    busca = carregar_indice_busca()
+    if indice:
+        busca["itens"][video_id] = indice
+    else:
+        busca["itens"].pop(video_id, None)
+    salvar_json_atomico(BUSCA_PATH, busca, indent=None)
+
+
+def reconstruir_indice_busca():
+    busca = {"versao": 1, "itens": {}}
+
+    for arquivo in sorted(VIDEOS_DIR.glob("*.json")):
+        try:
+            video = carregar_json_seguro(arquivo)
+        except (json.JSONDecodeError, ValueError):
+            continue
+
+        video_id = video.get("id") or arquivo.stem
+        indice = montar_indice_busca(video.get("transcricao", []))
+        if indice:
+            busca["itens"][video_id] = indice
+
+    salvar_json_atomico(BUSCA_PATH, busca, indent=None)
+    print(f"Indice de busca atualizado: {len(busca['itens'])} videos")
+    return busca
+
+
 def salvar_video(video):
     video_id = video["id"]
     video = limpar_transcricao(dict(video))
+    indice = montar_indice_busca(video.get("transcricao", []))
+    if indice:
+        video["busca"] = indice
+    else:
+        video.pop("busca", None)
     salvar_json_atomico(caminho_video(video_id), video, indent=None)
+    atualizar_entrada_indice_busca(video_id, indice)
     return video
 
 
@@ -198,12 +278,15 @@ def garantir_estrutura():
     VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
 
     if MANIFEST_PATH.exists():
-        return carregar_manifesto()
-
-    if LEGACY_PATH.exists():
+        manifesto = carregar_manifesto()
+    elif LEGACY_PATH.exists():
         migrar_arquivo_unico()
-        return carregar_manifesto()
+        manifesto = carregar_manifesto()
+    else:
+        manifesto = manifesto_vazio()
+        atualizar_manifesto(manifesto)
 
-    manifesto = manifesto_vazio()
-    atualizar_manifesto(manifesto)
+    if not BUSCA_PATH.exists() and VIDEOS_DIR.exists() and any(VIDEOS_DIR.glob("*.json")):
+        reconstruir_indice_busca()
+
     return manifesto

@@ -7,7 +7,7 @@
     <script>
 
         var LIMIT_RESULTS = 20;
-        var BATCH_SIZE = 20;
+        var MAX_MATCHES_POR_VIDEO = 3;
 
         async function fetchJson(fileName) {
             const response = await fetch(fileName);
@@ -19,6 +19,212 @@
 
         function cleanText(text) {
             return text.replace(/ {2,}/g, " ");
+        }
+
+        function normalizarTexto(text) {
+            return text
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9\s]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function maxErrosPermitidos(termo) {
+            if (termo.length <= 3) return 0;
+            if (termo.length <= 6) return 1;
+            return Math.min(3, Math.floor(termo.length / 4));
+        }
+
+        function distanciaLevenshteinLimitada(a, b, limite) {
+            if (Math.abs(a.length - b.length) > limite) return limite + 1;
+            if (a === b) return 0;
+
+            const prev = new Array(b.length + 1);
+            const curr = new Array(b.length + 1);
+            for (let j = 0; j <= b.length; j++) prev[j] = j;
+
+            for (let i = 1; i <= a.length; i++) {
+                curr[0] = i;
+                let minLinha = curr[0];
+                for (let j = 1; j <= b.length; j++) {
+                    const custo = a[i - 1] === b[j - 1] ? 0 : 1;
+                    curr[j] = Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + custo);
+                    minLinha = Math.min(minLinha, curr[j]);
+                }
+                if (minLinha > limite) return limite + 1;
+                for (let j = 0; j <= b.length; j++) prev[j] = curr[j];
+            }
+            return prev[b.length];
+        }
+
+        function tokenizar(texto) {
+            const tokens = [];
+            let i = 0;
+            while (i < texto.length) {
+                if (texto.charCodeAt(i) === 32) {
+                    i++;
+                    continue;
+                }
+                const start = i;
+                while (i < texto.length && texto.charCodeAt(i) !== 32) i++;
+                tokens.push({ w: texto.slice(start, i), start: start, end: i });
+            }
+            return tokens;
+        }
+
+        function palavraCombina(token, palavra) {
+            if (token.w === palavra) return true;
+            const maxErr = maxErrosPermitidos(palavra);
+            if (maxErr === 0) return false;
+            if (Math.abs(token.w.length - palavra.length) > maxErr) return false;
+            return distanciaLevenshteinLimitada(token.w, palavra, maxErr) <= maxErr;
+        }
+
+        function buscarExato(texto, termo) {
+            const ocorrencias = [];
+            let pos = 0;
+            while ((pos = texto.indexOf(termo, pos)) !== -1) {
+                ocorrencias.push({ start: pos, end: pos + termo.length });
+                pos += 1;
+            }
+            return ocorrencias;
+        }
+
+        function buscarPalavraFuzzy(tokens, palavra) {
+            const maxErr = maxErrosPermitidos(palavra);
+            if (maxErr === 0) return [];
+            const ocorrencias = [];
+            for (let i = 0; i < tokens.length; i++) {
+                const tok = tokens[i];
+                if (Math.abs(tok.w.length - palavra.length) > maxErr) continue;
+                if (distanciaLevenshteinLimitada(tok.w, palavra, maxErr) <= maxErr) {
+                    ocorrencias.push({ start: tok.start, end: tok.end });
+                }
+            }
+            return ocorrencias;
+        }
+
+        function buscarFraseFuzzy(tokens, palavras) {
+            const maxGap = Math.max(3, palavras.length * 2);
+            const ocorrencias = [];
+
+            for (let i = 0; i < tokens.length; i++) {
+                if (!palavraCombina(tokens[i], palavras[0])) continue;
+
+                let ti = i + 1;
+                let matchStart = tokens[i].start;
+                let matchEnd = tokens[i].end;
+                let ok = true;
+
+                for (let p = 1; p < palavras.length; p++) {
+                    let found = false;
+                    const limite = Math.min(tokens.length, ti + maxGap);
+                    for (; ti < limite; ti++) {
+                        if (palavraCombina(tokens[ti], palavras[p])) {
+                            matchEnd = tokens[ti].end;
+                            ti++;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        ok = false;
+                        break;
+                    }
+                }
+
+                if (ok) {
+                    ocorrencias.push({ start: matchStart, end: matchEnd });
+                    i = ti - 1;
+                }
+            }
+            return ocorrencias;
+        }
+
+        function buscarOcorrencias(texto, termo, tokensCache) {
+            if (!termo) return [];
+
+            const exato = buscarExato(texto, termo);
+            if (exato.length > 0) return exato;
+
+            const palavras = termo.split(' ');
+            const tokens = tokensCache || tokenizar(texto);
+
+            if (palavras.length === 1) {
+                return buscarPalavraFuzzy(tokens, palavras[0]);
+            }
+            return buscarFraseFuzzy(tokens, palavras);
+        }
+
+        function tStartMsParaPosicao(segmentos, pos) {
+            let tStartMs = segmentos[0][1];
+            for (let i = 0; i < segmentos.length; i++) {
+                if (segmentos[i][0] <= pos) {
+                    tStartMs = segmentos[i][1];
+                } else {
+                    break;
+                }
+            }
+            return tStartMs;
+        }
+
+        function extrairTrecho(indice, start, end, margem) {
+            margem = margem || 40;
+            const texto = indice.t;
+            const ctxStart = Math.max(0, start - margem);
+            const ctxEnd = Math.min(texto.length, end + margem);
+            const prefix = ctxStart > 0 ? '...' : '';
+            const suffix = ctxEnd < texto.length ? '...' : '';
+
+            return {
+                text: prefix + texto.substring(ctxStart, ctxEnd) + suffix,
+                tStartMs: tStartMsParaPosicao(indice.s, start)
+            };
+        }
+
+        function buscarNoIndice(indice, termo, limite) {
+            if (!indice || !indice.t) return [];
+
+            const tokens = tokenizar(indice.t);
+            const ocorrencias = buscarOcorrencias(indice.t, termo, tokens);
+            const matches = [];
+            const max = Math.min(ocorrencias.length, limite || MAX_MATCHES_POR_VIDEO);
+
+            for (let i = 0; i < max; i++) {
+                matches.push(extrairTrecho(indice, ocorrencias[i].start, ocorrencias[i].end));
+            }
+            return matches;
+        }
+
+        function montarIndiceLegado(transcricao) {
+            const partes = [];
+            const segmentos = [];
+            let pos = 0;
+
+            for (let si = 0; si < transcricao.length; si++) {
+                const seg = transcricao[si];
+                const norm = normalizarTexto(cleanText(seg.text));
+                if (!norm) continue;
+
+                if (partes.length > 0) {
+                    pos += 1;
+                }
+
+                segmentos.push([pos, seg.tStartMs]);
+                partes.push(norm);
+                pos += norm.length;
+            }
+
+            const texto = partes.join(' ');
+            if (!texto) return null;
+            return { t: texto, s: segmentos };
+        }
+
+        function buscarNaTranscricao(transcricao, termo) {
+            const indice = montarIndiceLegado(transcricao);
+            return buscarNoIndice(indice, termo);
         }
 
         function extrairVideoId(url) {
@@ -46,10 +252,10 @@
             return await fetchJson('transcricoes.json');
         }
 
-        function renderResultado(video, transcript) {
-            const videoId = extrairVideoId(video.url);
-            const videoTime = Math.floor(transcript.tStartMs / 1000);
-            const videoUrlWithTime = `${video.url}&t=${videoTime}s`;
+        function renderResultado(item, match) {
+            const videoId = item.id || extrairVideoId(item.url);
+            const videoTime = Math.floor(match.tStartMs / 1000);
+            const videoUrlWithTime = `${item.url}&t=${videoTime}s`;
             const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
 
             return `
@@ -58,84 +264,77 @@
                         <iframe style="width: 100%; height=100%" height="100%" src="https://www.youtube.com/embed/${videoId}?start=${videoTime}" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div style="width: 45%">
-                        <p>${video.titulo}</p>
+                        <p>${item.titulo}</p>
                         <img style="width: 60%" src="${thumbnailUrl}" alt="Thumbnail">
                         </br>
-                        <a href="${videoUrlWithTime}" target="_blank">${transcript.text}</br>(Assistir trecho no youtube)</a>
+                        <a href="${videoUrlWithTime}" target="_blank">${match.text}</br>(Assistir trecho no youtube)</a>
                     </div>
                 </div>
                 <hr>
             `;
         }
 
+        async function carregarIndiceBusca() {
+            try {
+                return await fetchJson('data/busca.json');
+            } catch {
+                return null;
+            }
+        }
+
         async function searchTranscription() {
             const resultsEl = document.getElementById('results');
-            resultsEl.innerHTML = 'Carregando transcricoes...';
+            resultsEl.innerHTML = 'Carregando indice de busca...';
 
-            const searchText = cleanText(document.getElementById('searchText').value.toLowerCase());
-            let results = [];
+            const searchText = normalizarTexto(cleanText(document.getElementById('searchText').value));
+            if (!searchText) {
+                resultsEl.innerHTML = 'Digite um texto para pesquisar.';
+                return;
+            }
+
             let html = '';
+            let total = 0;
 
             try {
-                const manifesto = await carregarManifesto();
+                const [manifesto, indiceBusca] = await Promise.all([
+                    carregarManifesto(),
+                    carregarIndiceBusca()
+                ]);
 
-                if (manifesto) {
-                    const itens = manifesto.itens || [];
+                if (manifesto && indiceBusca && indiceBusca.itens) {
+                    const itens = (manifesto.itens || []).filter(function (item) {
+                        return item.possui_transcricao && indiceBusca.itens[item.id];
+                    });
 
-                    for (let i = 0; i < itens.length && results.length < LIMIT_RESULTS; i += BATCH_SIZE) {
-                        const lote = itens.slice(i, i + BATCH_SIZE);
-                        resultsEl.innerHTML = `Carregando transcricoes... ${Math.min(i + BATCH_SIZE, itens.length)}/${itens.length}`;
-
-                        const videos = await Promise.all(
-                            lote.map(async (item) => {
-                                try {
-                                    return await fetchJson(`data/videos/${item.id}.json`);
-                                } catch {
-                                    return null;
-                                }
-                            })
+                    for (let i = 0; i < itens.length && total < LIMIT_RESULTS; i++) {
+                        const item = itens[i];
+                        const matches = buscarNoIndice(
+                            indiceBusca.itens[item.id],
+                            searchText,
+                            LIMIT_RESULTS - total
                         );
 
-                        for (const video of videos) {
-                            if (!video || results.length >= LIMIT_RESULTS) {
-                                continue;
-                            }
-
-                            for (const transcript of video.transcricao || []) {
-                                if (results.length >= LIMIT_RESULTS) {
-                                    break;
-                                }
-
-                                const text = cleanText(transcript.text);
-                                if (text.toLowerCase().includes(searchText)) {
-                                    results.push(video.titulo);
-                                    html += renderResultado(video, transcript);
-                                }
-                            }
+                        for (let j = 0; j < matches.length && total < LIMIT_RESULTS; j++) {
+                            html += renderResultado(item, matches[j]);
+                            total++;
                         }
                     }
+                } else if (manifesto) {
+                    resultsEl.innerHTML = 'Indice de busca nao encontrado. Execute: python migrar_dados.py';
+                    return;
                 } else {
                     const data = await carregarVideosLegado();
-                    for (const video of data) {
-                        if (results.length >= LIMIT_RESULTS) {
-                            break;
-                        }
-
-                        for (const transcript of video.transcricao || []) {
-                            if (results.length >= LIMIT_RESULTS) {
-                                break;
-                            }
-
-                            const text = cleanText(transcript.text);
-                            if (text.toLowerCase().includes(searchText)) {
-                                results.push(video.titulo);
-                                html += renderResultado(video, transcript);
-                            }
+                    for (let i = 0; i < data.length && total < LIMIT_RESULTS; i++) {
+                        const video = data[i];
+                        const matches = buscarNaTranscricao(video.transcricao || [], searchText);
+                        for (let j = 0; j < matches.length && total < LIMIT_RESULTS; j++) {
+                            html += renderResultado(video, matches[j]);
+                            total++;
                         }
                     }
                 }
 
-                if (results.length >= LIMIT_RESULTS) {
+                if (total >= LIMIT_RESULTS) {
                     html += `
                         <div style="display:flex; gap:10px">
                             <p>Limite de resultados atingido</p>
@@ -144,7 +343,7 @@
                     `;
                 }
 
-                resultsEl.innerHTML = results.length === 0 ? 'Nenhum resultado encontrado' : html;
+                resultsEl.innerHTML = total === 0 ? 'Nenhum resultado encontrado' : html;
             } catch (error) {
                 console.error(error);
                 resultsEl.innerHTML = 'Erro ao carregar os dados. Verifique se os arquivos JSON estao validos em data/.';
@@ -194,7 +393,7 @@
         <input type="submit" value="Pesquisar">
         <button onclick="share()">Compartilhar</button>
     </form>
-    <p>Dica: Digite textos curtos para encontrar mais resultados</p>
+    <p>Dica: A busca ignora acentos, cruza trechos da transcricao e tolera pequenas diferencas de grafia.</p>
     <div id="results"></div>
 </body>
 </html>
