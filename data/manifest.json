@@ -1,8 +1,722 @@
 {
   "versao": 1,
-  "videos": 395,
+  "videos": 514,
   "dataExecucao": "18/06/2026",
   "itens": [
+    {
+      "id": "6Ly0r3d4fZ8",
+      "url": "https://www.youtube.com/watch?v=6Ly0r3d4fZ8",
+      "titulo": "Culto de 25 anos de ministério de Pr João Pedro - 20/05/2018",
+      "possui_transcricao": false
+    },
+    {
+      "id": "z6mN-SjMi5k",
+      "url": "https://www.youtube.com/watch?v=z6mN-SjMi5k",
+      "titulo": "Mensagem 27/05/2018 | Colossenses | Colossenses 1.15-23 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Cz85Soqxk6A",
+      "url": "https://www.youtube.com/watch?v=Cz85Soqxk6A",
+      "titulo": "Mensagem 10/06/2018 | Colossenses | Colossenses 2.6-15 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "sKt_n-V8B94",
+      "url": "https://www.youtube.com/watch?v=sKt_n-V8B94",
+      "titulo": "Mensagem 17/06/2018 | Colossenses | Colossenses 2.16-23 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Odb0xWgGOso",
+      "url": "https://www.youtube.com/watch?v=Odb0xWgGOso",
+      "titulo": "Mensagem 24/06/2018 | Colossenses | Colossenses 3.1-11 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "AG2so9gYsTM",
+      "url": "https://www.youtube.com/watch?v=AG2so9gYsTM",
+      "titulo": "Mensagem 01/07/2018 | Colossenses | Colossenses 3.12-17 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Stc_DxzEgog",
+      "url": "https://www.youtube.com/watch?v=Stc_DxzEgog",
+      "titulo": "Mensagem 08/07/2018 | Colossenses | Colossenses 3.18-4.1 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "wcmRbAjMK38",
+      "url": "https://www.youtube.com/watch?v=wcmRbAjMK38",
+      "titulo": "Mensagem 22/07/2018 | Isaías | Isaías 36-37 | Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "WN5R1zaLEtk",
+      "url": "https://www.youtube.com/watch?v=WN5R1zaLEtk",
+      "titulo": "Mensagem 29/07/2018 | Isaías | Isaías 40-41 | Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "HQZmdheuurM",
+      "url": "https://www.youtube.com/watch?v=HQZmdheuurM",
+      "titulo": "Mensagem 12/08/2018 | Isaías | Isaías 43.1-13, 20-27 | Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "4Spnd0rdfiQ",
+      "url": "https://www.youtube.com/watch?v=4Spnd0rdfiQ",
+      "titulo": "INTERJOVENS 2018 - Poder da Palavra",
+      "possui_transcricao": false
+    },
+    {
+      "id": "iON-ATiMQRg",
+      "url": "https://www.youtube.com/watch?v=iON-ATiMQRg",
+      "titulo": "IX Conferência Missionária - 2 Corintios 4 - Pr. Alex - 30/09/2018",
+      "possui_transcricao": false
+    },
+    {
+      "id": "ON-AAM7x-6A",
+      "url": "https://www.youtube.com/watch?v=ON-AAM7x-6A",
+      "titulo": "Mensagem 14/10/2018 | Isaías | Isaías 52.13-53 | Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "h4TJ5O5gk2E",
+      "url": "https://www.youtube.com/watch?v=h4TJ5O5gk2E",
+      "titulo": "Mensagem 28/10/2018 | Jesus, Servo sofredor | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "EgSKnsZHbm0",
+      "url": "https://www.youtube.com/watch?v=EgSKnsZHbm0",
+      "titulo": "Convite de Jesus - Pr João Pedro - 04/11/2018",
+      "possui_transcricao": false
+    },
+    {
+      "id": "qcy1RznVFsU",
+      "url": "https://www.youtube.com/watch?v=qcy1RznVFsU",
+      "titulo": "Mensagem 25/11/2018 | Jesus, O Rei dos Reis | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "cWnmLVkapMg",
+      "url": "https://www.youtube.com/watch?v=cWnmLVkapMg",
+      "titulo": "Natal 2018 - Pr. Fabio Moreira - 02/12/2018",
+      "possui_transcricao": false
+    },
+    {
+      "id": "27wqVedtn8I",
+      "url": "https://www.youtube.com/watch?v=27wqVedtn8I",
+      "titulo": "Natal 2018 - Pr. Edison Naves - 09/12/2018",
+      "possui_transcricao": false
+    },
+    {
+      "id": "U-hNcmiiPds",
+      "url": "https://www.youtube.com/watch?v=U-hNcmiiPds",
+      "titulo": "Mensagem 06/01/2019 | As Bem-Aventuranças | Mateus 5.1-11 | Pr Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "LKua6-hnVYs",
+      "url": "https://www.youtube.com/watch?v=LKua6-hnVYs",
+      "titulo": "Mensagem 13/01/2019 | As Bem-Aventuranças | Mateus 5.3 | Pr Edison Naves [Parte 2]",
+      "possui_transcricao": false
+    },
+    {
+      "id": "QNhDrQWcCRk",
+      "url": "https://www.youtube.com/watch?v=QNhDrQWcCRk",
+      "titulo": "Culto de Transição da Liderança da Igreja Batista Maranata - 24/02/2019",
+      "possui_transcricao": false
+    },
+    {
+      "id": "rDCGrqoxwGA",
+      "url": "https://www.youtube.com/watch?v=rDCGrqoxwGA",
+      "titulo": "Mensagem 10/03/2019 | I Pedro | I Pedro 1.1-9 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "YpuoAZFiX-w",
+      "url": "https://www.youtube.com/watch?v=YpuoAZFiX-w",
+      "titulo": "Mensagem 07/04/2019 | I Pedro | I Pedro 2.11-25 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "YAN75nGKUuE",
+      "url": "https://www.youtube.com/watch?v=YAN75nGKUuE",
+      "titulo": "Salmo 25 - Pr. Fábio Moreira - 28/04/2019",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Uq5EYySoyok",
+      "url": "https://www.youtube.com/watch?v=Uq5EYySoyok",
+      "titulo": "Mensagem 12/05/2019 | I Pedro | I Pedro 3.1-7 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "BnIHvH0--8Q",
+      "url": "https://www.youtube.com/watch?v=BnIHvH0--8Q",
+      "titulo": "Mensagem 19/05/2019 | I Pedro | I Pedro 3.8-12 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "OnRertSViSs",
+      "url": "https://www.youtube.com/watch?v=OnRertSViSs",
+      "titulo": "Mensagem 26/05/2019 | I Pedro | I Pedro 3.13-22 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "8RxfmKUkGOo",
+      "url": "https://www.youtube.com/watch?v=8RxfmKUkGOo",
+      "titulo": "Mensagem 02/06/2019 | I Pedro | I Pedro 4.1-11 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "YuHeyKBgotI",
+      "url": "https://www.youtube.com/watch?v=YuHeyKBgotI",
+      "titulo": "Mensagem 30/06/2019 | Igrejas do Apocalipse | Apocalipse 2.1-7 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "rVFTDxH19dc",
+      "url": "https://www.youtube.com/watch?v=rVFTDxH19dc",
+      "titulo": "Mensagem 07/07/2019 | Igrejas do Apocalipse | Apocalipse 2.8-11 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "82uzhmnr8WA",
+      "url": "https://www.youtube.com/watch?v=82uzhmnr8WA",
+      "titulo": "Conferência SEXUALIDADE: Casamento | Denis Araújo",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Gvv0zTijiCU",
+      "url": "https://www.youtube.com/watch?v=Gvv0zTijiCU",
+      "titulo": "Conferência SEXUALIDADE: Namoro | Alexandre \"Sacha\"",
+      "possui_transcricao": false
+    },
+    {
+      "id": "f1NKgCB1K9w",
+      "url": "https://www.youtube.com/watch?v=f1NKgCB1K9w",
+      "titulo": "Mensagem 28/07/2019 | Igrejas do Apocalipse | Apocalipse 3.1-6 | Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "1FuqdyR6G2w",
+      "url": "https://www.youtube.com/watch?v=1FuqdyR6G2w",
+      "titulo": "Mensagem 04/08/2019 | Igrejas do Apocalipse | Apocalipse 3.7-13 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Wnlwho7EWpk",
+      "url": "https://www.youtube.com/watch?v=Wnlwho7EWpk",
+      "titulo": "01/09/2019 Parte 2 - Culto de Reconhecimento do Pr. Marcelo Brasolin - Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "cC7smWCBbis",
+      "url": "https://www.youtube.com/watch?v=cC7smWCBbis",
+      "titulo": "Mensagem 08/09/2019 | O Bom Pastor | Ezequiel 34 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "PUUZAQUKHuI",
+      "url": "https://www.youtube.com/watch?v=PUUZAQUKHuI",
+      "titulo": "Culto de Aniversário 45 Anos | 22 de setembro de 2019",
+      "possui_transcricao": false
+    },
+    {
+      "id": "wVsPKIJUiZI",
+      "url": "https://www.youtube.com/watch?v=wVsPKIJUiZI",
+      "titulo": "13/10/2019 - Pr. Marcelo Brasolin - Mateus 28.18-20",
+      "possui_transcricao": false
+    },
+    {
+      "id": "RzvG1YkIAvU",
+      "url": "https://www.youtube.com/watch?v=RzvG1YkIAvU",
+      "titulo": "03/11/2019 - II Pedro - Pr. Edison - 2 Pedro 1.12-21",
+      "possui_transcricao": false
+    },
+    {
+      "id": "nkFfNaH6EQg",
+      "url": "https://www.youtube.com/watch?v=nkFfNaH6EQg",
+      "titulo": "24/11/2019 - II Pedro - Pr. Sacha - 2 Pedro 3.8-18",
+      "possui_transcricao": false
+    },
+    {
+      "id": "fd47N5iA-NI",
+      "url": "https://www.youtube.com/watch?v=fd47N5iA-NI",
+      "titulo": "29/12/2019 - O Exercício Da Fé - Marcos 5.21- 43 - Pr. Edison",
+      "possui_transcricao": false
+    },
+    {
+      "id": "4sO2PdnsjZ8",
+      "url": "https://www.youtube.com/watch?v=4sO2PdnsjZ8",
+      "titulo": "26/01/2020 | Ser e Fazer Discípulos | Mateus 5.17-48 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "bBlAi5JZqa4",
+      "url": "https://www.youtube.com/watch?v=bBlAi5JZqa4",
+      "titulo": "Conferência: Conduzindo Crianças | Pr. Tedd Tripp | Palestra 3",
+      "possui_transcricao": false
+    },
+    {
+      "id": "2MEiQuWILms",
+      "url": "https://www.youtube.com/watch?v=2MEiQuWILms",
+      "titulo": "Conferência: Conduzindo Crianças | Pr. Tedd Tripp | Palestra 4",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Bmm80BXqngE",
+      "url": "https://www.youtube.com/watch?v=Bmm80BXqngE",
+      "titulo": "Conferência: Conduzindo Crianças | Pr. Tedd Tripp | Palestra 5",
+      "possui_transcricao": false
+    },
+    {
+      "id": "26uTNewHI_8",
+      "url": "https://www.youtube.com/watch?v=26uTNewHI_8",
+      "titulo": "02/02/2020 | Ser e Fazer Discípulos | Mateus 6.1-4; 6.16-18 | Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "3_2Re7grqFQ",
+      "url": "https://www.youtube.com/watch?v=3_2Re7grqFQ",
+      "titulo": "09/02/2020 | Ser e Fazer Discípulos | Mateus 6.5-15 | Pr. Marcelo Brasolin",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Rgqwvb_XX5c",
+      "url": "https://www.youtube.com/watch?v=Rgqwvb_XX5c",
+      "titulo": "16/02/2020 | Ser e Fazer Discípulos | Mateus 6.19-34 | Pr. Fábio Moreira",
+      "possui_transcricao": false
+    },
+    {
+      "id": "-29PT1RB4FM",
+      "url": "https://www.youtube.com/watch?v=-29PT1RB4FM",
+      "titulo": "23/02/2020 | Ser e Fazer Discípulos | Mateus 7.1-12 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "eYk9beNvrn8",
+      "url": "https://www.youtube.com/watch?v=eYk9beNvrn8",
+      "titulo": "01/03/2020 | Ser e Fazer Discípulos | Mateus 7.13-29 | Pr. Edison Naves",
+      "possui_transcricao": false
+    },
+    {
+      "id": "hKV9IntBVb4",
+      "url": "https://www.youtube.com/watch?v=hKV9IntBVb4",
+      "titulo": "EBD 05/04/2020 | Promessas que Sustém | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "eGHa5dr7LFM",
+      "url": "https://www.youtube.com/watch?v=eGHa5dr7LFM",
+      "titulo": "EBD 19/04/2020 | Comunidade Centrada no Evangelho Parte 1 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "PtLiXKvTzik",
+      "url": "https://www.youtube.com/watch?v=PtLiXKvTzik",
+      "titulo": "EBD 26/04/2020 | Comunidade Centrada no Evangelho Parte 2 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Z4qMeEOwxD0",
+      "url": "https://www.youtube.com/watch?v=Z4qMeEOwxD0",
+      "titulo": "EBD 10/05/2020 | Vida Cristã 1 | Pr. Marcelo B.",
+      "possui_transcricao": false
+    },
+    {
+      "id": "CvniigagwuE",
+      "url": "https://www.youtube.com/watch?v=CvniigagwuE",
+      "titulo": "EBD 07/06/2020 | Profetas Menores | Gustavo Santos",
+      "possui_transcricao": false
+    },
+    {
+      "id": "FordSGUW46Y",
+      "url": "https://www.youtube.com/watch?v=FordSGUW46Y",
+      "titulo": "Café com as amigas | 19.06.2020",
+      "possui_transcricao": false
+    },
+    {
+      "id": "4wowsQZWSSw",
+      "url": "https://www.youtube.com/watch?v=4wowsQZWSSw",
+      "titulo": "Palavra pastoral - IBMaranata - 22.06.2020 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "HkpbnIRJ99Y",
+      "url": "https://www.youtube.com/watch?v=HkpbnIRJ99Y",
+      "titulo": "Café com as amigas | 03.07.2020",
+      "possui_transcricao": false
+    },
+    {
+      "id": "9ptP5vSwmW0",
+      "url": "https://www.youtube.com/watch?v=9ptP5vSwmW0",
+      "titulo": "Palavra pastoral - IBMaranata - 06.07.2020 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "FSjgWTVSeP4",
+      "url": "https://www.youtube.com/watch?v=FSjgWTVSeP4",
+      "titulo": "Palavra pastoral - IBMaranata - 13.07.2020 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "MtqxL-EGscM",
+      "url": "https://www.youtube.com/watch?v=MtqxL-EGscM",
+      "titulo": "Café com as amigas | 17.07.2020",
+      "possui_transcricao": false
+    },
+    {
+      "id": "tOyXyZlX_ts",
+      "url": "https://www.youtube.com/watch?v=tOyXyZlX_ts",
+      "titulo": "Café com as amigas | 24.07.2020",
+      "possui_transcricao": false
+    },
+    {
+      "id": "GdtraE4_iEs",
+      "url": "https://www.youtube.com/watch?v=GdtraE4_iEs",
+      "titulo": "Palavra Pastoral - IBMaranata - 03.08.2020 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "8wS3zqECD7g",
+      "url": "https://www.youtube.com/watch?v=8wS3zqECD7g",
+      "titulo": "Café com as amigas | 07.08.2020",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Q_KGSNDOFJw",
+      "url": "https://www.youtube.com/watch?v=Q_KGSNDOFJw",
+      "titulo": "Palavra pastoral - IBMaranata - 17.08.2020 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "4gozX4IG_WA",
+      "url": "https://www.youtube.com/watch?v=4gozX4IG_WA",
+      "titulo": "EBD 30/08/2020 | Romanos e Profetas Menores",
+      "possui_transcricao": false
+    },
+    {
+      "id": "kFNn8OVoQKE",
+      "url": "https://www.youtube.com/watch?v=kFNn8OVoQKE",
+      "titulo": "Mensagem 30/08/2020 | 1Tm 4.11-16 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "6fUL03B4umg",
+      "url": "https://www.youtube.com/watch?v=6fUL03B4umg",
+      "titulo": "Palavra pastoral - IBMaranata - 31.08.2020 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "QKjDTuNuldc",
+      "url": "https://www.youtube.com/watch?v=QKjDTuNuldc",
+      "titulo": "Mensagem 06/09/2020 | Judas 1.1-16 | Pr. Fábio Moreira",
+      "possui_transcricao": false
+    },
+    {
+      "id": "vBJHKP4ZQ0o",
+      "url": "https://www.youtube.com/watch?v=vBJHKP4ZQ0o",
+      "titulo": "Palavra pastoral 09/09/2020 | Criando um ambiente seguro na Igreja | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "p-eLFrvJ8gc",
+      "url": "https://www.youtube.com/watch?v=p-eLFrvJ8gc",
+      "titulo": "Palavra pastoral 21/09/2020 | Revisão do culto | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "9b7a_QsXN_k",
+      "url": "https://www.youtube.com/watch?v=9b7a_QsXN_k",
+      "titulo": "Palavra pastoral - IBMaranata - 28.09.2020 - Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "PXHRpq8xrvE",
+      "url": "https://www.youtube.com/watch?v=PXHRpq8xrvE",
+      "titulo": "Mensagem 04/10/2020 | 1Tm 6.3-10 e 17-19 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "kEoi9pkM-CU",
+      "url": "https://www.youtube.com/watch?v=kEoi9pkM-CU",
+      "titulo": "Palavra Pastoral 12/10/2020 | Revisão do culto | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "iY1gPYHnmIs",
+      "url": "https://www.youtube.com/watch?v=iY1gPYHnmIs",
+      "titulo": "Devocional 20/10/2020 | Avivamento espiritual: Parte 1 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "dKmUq38K2vQ",
+      "url": "https://www.youtube.com/watch?v=dKmUq38K2vQ",
+      "titulo": "Devocional 22/10/2020 | Avivamento Espiritual: Parte 3 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "MsZ31hWZ8A4",
+      "url": "https://www.youtube.com/watch?v=MsZ31hWZ8A4",
+      "titulo": "Mensagem 25/10/2020 | Missões | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "lz4qU1jSooE",
+      "url": "https://www.youtube.com/watch?v=lz4qU1jSooE",
+      "titulo": "Palavra Pastoral 02/11/2020 | Revisão do culto | Gustavo Santos",
+      "possui_transcricao": false
+    },
+    {
+      "id": "1BHa-YduXGY",
+      "url": "https://www.youtube.com/watch?v=1BHa-YduXGY",
+      "titulo": "Palavra Pastoral 09/11/2020 | Revisão do culto | Gustavo Santos",
+      "possui_transcricao": false
+    },
+    {
+      "id": "TVVcHSvPC9g",
+      "url": "https://www.youtube.com/watch?v=TVVcHSvPC9g",
+      "titulo": "Mensagem 15/11/2020 | Jonas 3 | Pr. Marcelo Brasolin",
+      "possui_transcricao": false
+    },
+    {
+      "id": "mmtsxNlok2c",
+      "url": "https://www.youtube.com/watch?v=mmtsxNlok2c",
+      "titulo": "Palavra Pastoral 16/11/2020 | Revisão do culto | Pr. Marcelo B.",
+      "possui_transcricao": false
+    },
+    {
+      "id": "CoORIqkopkE",
+      "url": "https://www.youtube.com/watch?v=CoORIqkopkE",
+      "titulo": "Mensagem 22/11/2020 | Jonas 4 | Pr. Marcelo Brasolin",
+      "possui_transcricao": false
+    },
+    {
+      "id": "3hWu3yaZd58",
+      "url": "https://www.youtube.com/watch?v=3hWu3yaZd58",
+      "titulo": "Culto da Manhã 29/11/2020 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "5hMRcboUdbQ",
+      "url": "https://www.youtube.com/watch?v=5hMRcboUdbQ",
+      "titulo": "Mensagem 29/11/2020 | Lucas 1.5-25 | Pr. Edison",
+      "possui_transcricao": false
+    },
+    {
+      "id": "zmp6OfmZHSI",
+      "url": "https://www.youtube.com/watch?v=zmp6OfmZHSI",
+      "titulo": "Mensagem 06/12/2020 | Pr. João Pedro",
+      "possui_transcricao": false
+    },
+    {
+      "id": "FLjpZJrGsmE",
+      "url": "https://www.youtube.com/watch?v=FLjpZJrGsmE",
+      "titulo": "Mensagem 13/12/2020 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "l5j6riCg3cc",
+      "url": "https://www.youtube.com/watch?v=l5j6riCg3cc",
+      "titulo": "Mensagem 27/12/2020 | Pr. Marcelo | Revisão do ano",
+      "possui_transcricao": false
+    },
+    {
+      "id": "CNCcTUgKsQ0",
+      "url": "https://www.youtube.com/watch?v=CNCcTUgKsQ0",
+      "titulo": "Mensagem 03/01/2021 | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "vUKJepmDrOw",
+      "url": "https://www.youtube.com/watch?v=vUKJepmDrOw",
+      "titulo": "EBD 14/02/2021 | Exame espiritual: 6 D's | Pr. Sacha Mendes",
+      "possui_transcricao": false
+    },
+    {
+      "id": "FLsTEyFS-d8",
+      "url": "https://www.youtube.com/watch?v=FLsTEyFS-d8",
+      "titulo": "Mensagem 14/02/2021 | \"De fato, Deus é bom\" | Pr. Fábio",
+      "possui_transcricao": false
+    },
+    {
+      "id": "E8ZA1aE0XVI",
+      "url": "https://www.youtube.com/watch?v=E8ZA1aE0XVI",
+      "titulo": "Mensagem 28/02/2021 | Tg 3.13-18 | Pr. Edison",
+      "possui_transcricao": false
+    },
+    {
+      "id": "wvP8Wd1n1ss",
+      "url": "https://www.youtube.com/watch?v=wvP8Wd1n1ss",
+      "titulo": "Mensagem 14/03/2021 | Tiago 4.13-17 | Pr. Edison",
+      "possui_transcricao": false
+    },
+    {
+      "id": "dLMJu8CCVBA",
+      "url": "https://www.youtube.com/watch?v=dLMJu8CCVBA",
+      "titulo": "Mensagem  21/03/2021 | Tiago  5.1-6  | Pr. Edison",
+      "possui_transcricao": false
+    },
+    {
+      "id": "Itr2eQtUaAA",
+      "url": "https://www.youtube.com/watch?v=Itr2eQtUaAA",
+      "titulo": "Série de Páscoa 30/03/2021 | Eis o Cordeiro | A Necessidade do Cordeiro",
+      "possui_transcricao": false
+    },
+    {
+      "id": "X6QafmkqGYc",
+      "url": "https://www.youtube.com/watch?v=X6QafmkqGYc",
+      "titulo": "Série de Páscoa 31/03/2021 | Eis o Cordeiro | O Nome do Cordeiro",
+      "possui_transcricao": false
+    },
+    {
+      "id": "JOdX1y96Yw8",
+      "url": "https://www.youtube.com/watch?v=JOdX1y96Yw8",
+      "titulo": "Série de Páscoa 01/04/2021 | Eis o Cordeiro | A Obra do Cordeiro",
+      "possui_transcricao": false
+    },
+    {
+      "id": "0HH4uPA7yTY",
+      "url": "https://www.youtube.com/watch?v=0HH4uPA7yTY",
+      "titulo": "Jubamar Live | 17/04/2021 | William Rubial",
+      "possui_transcricao": false
+    },
+    {
+      "id": "GX5tMJin7cc",
+      "url": "https://www.youtube.com/watch?v=GX5tMJin7cc",
+      "titulo": "Mensagem 25/04/2021 | Gênesis 4 | Pr. Sacha",
+      "possui_transcricao": false
+    },
+    {
+      "id": "BLNwsVxTaEM",
+      "url": "https://www.youtube.com/watch?v=BLNwsVxTaEM",
+      "titulo": "EBD Ceia 02/05/2021 | Pr. Fabio",
+      "possui_transcricao": false
+    },
+    {
+      "id": "22t04lkAKYc",
+      "url": "https://www.youtube.com/watch?v=22t04lkAKYc",
+      "titulo": "Culto 30/11/2025 | Pr Fabio | Salmo 56",
+      "possui_transcricao": false
+    },
+    {
+      "id": "f2JGLQQfMec",
+      "url": "https://www.youtube.com/watch?v=f2JGLQQfMec",
+      "titulo": "Culto 07/12/2025 | Pr Edson | Natal nos Evangelhos",
+      "possui_transcricao": false
+    },
+    {
+      "id": "EGBFqZoqf2k",
+      "url": "https://www.youtube.com/watch?v=EGBFqZoqf2k",
+      "titulo": "Culto 14/12/2025 | Pr Sacha | Natal#02",
+      "possui_transcricao": false
+    },
+    {
+      "id": "XcJ32ulzW-4",
+      "url": "https://www.youtube.com/watch?v=XcJ32ulzW-4",
+      "titulo": "Culto 21/12/2025 | Pr Sacha | Especial Natal | Luz que nos fortalece, amor que nos une",
+      "possui_transcricao": false
+    },
+    {
+      "id": "IfeMgY4_xQg",
+      "url": "https://www.youtube.com/watch?v=IfeMgY4_xQg",
+      "titulo": "Culto 28/12/2025 | Pr Edison | Natal na carta aos Hebreus",
+      "possui_transcricao": true
+    },
+    {
+      "id": "Bjuj_CgyYa8",
+      "url": "https://www.youtube.com/watch?v=Bjuj_CgyYa8",
+      "titulo": "Culto 31/12/2025 | Pr Sacha | Culto da virada",
+      "possui_transcricao": true
+    },
+    {
+      "id": "qpZCKpkktLk",
+      "url": "https://www.youtube.com/watch?v=qpZCKpkktLk",
+      "titulo": "Culto 29/03/2026 | Pr Fábio |",
+      "possui_transcricao": true
+    },
+    {
+      "id": "PUCvHfL7cLQ",
+      "url": "https://www.youtube.com/watch?v=PUCvHfL7cLQ",
+      "titulo": "Worship Service 03/04/2026 | The Wisdom of the Cross",
+      "possui_transcricao": true
+    },
+    {
+      "id": "ua-wSiqMvag",
+      "url": "https://www.youtube.com/watch?v=ua-wSiqMvag",
+      "titulo": "Worship Service 05/04/2026 | Resurrection Service",
+      "possui_transcricao": true
+    },
+    {
+      "id": "igPJsLwhBJQ",
+      "url": "https://www.youtube.com/watch?v=igPJsLwhBJQ",
+      "titulo": "Culto 05/04/2026 | Pr Sacha | Provérbios 4.20-27",
+      "possui_transcricao": false
+    },
+    {
+      "id": "WouWbsygbEY",
+      "url": "https://www.youtube.com/watch?v=WouWbsygbEY",
+      "titulo": "Culto 12/04/2026 | Pr Sacha | Provérbios 5.1-23",
+      "possui_transcricao": true
+    },
+    {
+      "id": "JT0bzHsMMUc",
+      "url": "https://www.youtube.com/watch?v=JT0bzHsMMUc",
+      "titulo": "Worship Service 04/19/2026 | Pastor Sacha | Proverbs 6:1-5",
+      "possui_transcricao": true
+    },
+    {
+      "id": "346EsaWDjFM",
+      "url": "https://www.youtube.com/watch?v=346EsaWDjFM",
+      "titulo": "Culto 26/04/2026 | Pr Sacha | Provérbios 6.6-11 | Preguiça",
+      "possui_transcricao": true
+    },
+    {
+      "id": "SivzEqpXCT0",
+      "url": "https://www.youtube.com/watch?v=SivzEqpXCT0",
+      "titulo": "Culto 03/05/2026 | Pr Sacha | Provérbios 6.12-19 | Relacionamentos",
+      "possui_transcricao": true
+    },
+    {
+      "id": "nTGK1yvrE28",
+      "url": "https://www.youtube.com/watch?v=nTGK1yvrE28",
+      "titulo": "Culto 10/05/2026 | Pr Sacha | Provérbios 6.20 - 7.27 | Imoralidade Sexual - Parte 2",
+      "possui_transcricao": true
+    },
+    {
+      "id": "zHtdTcrJuDM",
+      "url": "https://www.youtube.com/watch?v=zHtdTcrJuDM",
+      "titulo": "Worship Service 05/17/2026 | Pastor Sacha | Proverbs 8:1-36",
+      "possui_transcricao": true
+    },
+    {
+      "id": "i_FphOTkEFs",
+      "url": "https://www.youtube.com/watch?v=i_FphOTkEFs",
+      "titulo": "Culto 24/05/2026 | Pr Sacha | Provérbios 9:1-18",
+      "possui_transcricao": true
+    },
+    {
+      "id": "Fv8tEoOXwl8",
+      "url": "https://www.youtube.com/watch?v=Fv8tEoOXwl8",
+      "titulo": "Culto 31/05/2026 | Pr Edison | Efésios 5.18-6.4",
+      "possui_transcricao": true
+    },
+    {
+      "id": "m2q6ALo7KVI",
+      "url": "https://www.youtube.com/watch?v=m2q6ALo7KVI",
+      "titulo": "Culto 07/06/2026 | Deus simplesmente dá sabedoria  | Pr. Edison",
+      "possui_transcricao": true
+    },
+    {
+      "id": "e9GBB_mM_1w",
+      "url": "https://www.youtube.com/watch?v=e9GBB_mM_1w",
+      "titulo": "Culto 14/06/2026 | Pr Sacha | \"Que sabedoria é essa?\" - Thiago 3.13-17",
+      "possui_transcricao": true
+    },
     {
       "id": "dZO7FzHlB5Y",
       "url": "https://www.youtube.com/watch?v=dZO7FzHlB5Y",

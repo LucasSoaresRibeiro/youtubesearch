@@ -1,15 +1,14 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Index Videos",
+            "name": "Index Videos (delta)",
             "type": "debugpy",
             "request": "launch",
-            "program": "ytsearch.py",
-            "console": "integratedTerminal"
+            "program": "${workspaceFolder}/scripts/ytsearch.py",
+            "args": ["--delta"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
