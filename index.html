@@ -7,77 +7,147 @@
     <script>
 
         var LIMIT_RESULTS = 20;
+        var BATCH_SIZE = 20;
 
-        async function fetchData(fileName) {
+        async function fetchJson(fileName) {
             const response = await fetch(fileName);
+            if (!response.ok) {
+                throw new Error(`Falha ao carregar ${fileName}: ${response.status}`);
+            }
             return await response.json();
         }
 
         function cleanText(text) {
             return text.replace(/ {2,}/g, " ");
         }
-        
+
+        function extrairVideoId(url) {
+            try {
+                const parsed = new URL(url);
+                if (parsed.hostname === 'youtu.be') {
+                    return parsed.pathname.slice(1).split('/')[0];
+                }
+                return parsed.searchParams.get('v');
+            } catch {
+                const match = url.match(/[?&]v=([^&]+)/);
+                return match ? match[1] : null;
+            }
+        }
+
+        async function carregarManifesto() {
+            try {
+                return await fetchJson('data/manifest.json');
+            } catch {
+                return null;
+            }
+        }
+
+        async function carregarVideosLegado() {
+            return await fetchJson('transcricoes.json');
+        }
+
+        function renderResultado(video, transcript) {
+            const videoId = extrairVideoId(video.url);
+            const videoTime = Math.floor(transcript.tStartMs / 1000);
+            const videoUrlWithTime = `${video.url}&t=${videoTime}s`;
+            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+
+            return `
+                <div style="display:flex; gap:10px">
+                    <div style="width: 50%">
+                        <iframe style="width: 100%; height=100%" height="100%" src="https://www.youtube.com/embed/${videoId}?start=${videoTime}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div style="width: 45%">
+                        <p>${video.titulo}</p>
+                        <img style="width: 60%" src="${thumbnailUrl}" alt="Thumbnail">
+                        </br>
+                        <a href="${videoUrlWithTime}" target="_blank">${transcript.text}</br>(Assistir trecho no youtube)</a>
+                    </div>
+                </div>
+                <hr>
+            `;
+        }
+
         async function searchTranscription() {
+            const resultsEl = document.getElementById('results');
+            resultsEl.innerHTML = 'Carregando transcricoes...';
 
-            document.getElementById('results').innerHTML = 'Pesquisando...';
-
-            let data = await fetchData('transcricoes.json');
             const searchText = cleanText(document.getElementById('searchText').value.toLowerCase());
             let results = [];
+            let html = '';
 
-            document.getElementById('results').innerHTML = "";
+            try {
+                const manifesto = await carregarManifesto();
 
-            data.forEach(video => {
+                if (manifesto) {
+                    const itens = manifesto.itens || [];
 
-                if (results.length >= LIMIT_RESULTS) {
-                    return;
+                    for (let i = 0; i < itens.length && results.length < LIMIT_RESULTS; i += BATCH_SIZE) {
+                        const lote = itens.slice(i, i + BATCH_SIZE);
+                        resultsEl.innerHTML = `Carregando transcricoes... ${Math.min(i + BATCH_SIZE, itens.length)}/${itens.length}`;
+
+                        const videos = await Promise.all(
+                            lote.map(async (item) => {
+                                try {
+                                    return await fetchJson(`data/videos/${item.id}.json`);
+                                } catch {
+                                    return null;
+                                }
+                            })
+                        );
+
+                        for (const video of videos) {
+                            if (!video || results.length >= LIMIT_RESULTS) {
+                                continue;
+                            }
+
+                            for (const transcript of video.transcricao || []) {
+                                if (results.length >= LIMIT_RESULTS) {
+                                    break;
+                                }
+
+                                const text = cleanText(transcript.text);
+                                if (text.toLowerCase().includes(searchText)) {
+                                    results.push(video.titulo);
+                                    html += renderResultado(video, transcript);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    const data = await carregarVideosLegado();
+                    for (const video of data) {
+                        if (results.length >= LIMIT_RESULTS) {
+                            break;
+                        }
+
+                        for (const transcript of video.transcricao || []) {
+                            if (results.length >= LIMIT_RESULTS) {
+                                break;
+                            }
+
+                            const text = cleanText(transcript.text);
+                            if (text.toLowerCase().includes(searchText)) {
+                                results.push(video.titulo);
+                                html += renderResultado(video, transcript);
+                            }
+                        }
+                    }
                 }
 
-                video.transcricao.forEach(transcript => {
+                if (results.length >= LIMIT_RESULTS) {
+                    html += `
+                        <div style="display:flex; gap:10px">
+                            <p>Limite de resultados atingido</p>
+                        </div>
+                        <hr>
+                    `;
+                }
 
-                    if (results.length >= LIMIT_RESULTS) {
-                        return;
-                    }
-
-                    text = cleanText(transcript.text);
-                    if (text.toLowerCase().includes(searchText)) {
-                        const videoId = video.url.split('v=')[1];
-                        const videoTime = Math.floor(transcript.tStartMs / 1000);
-                        const videoUrlWithTime = `${video.url}&t=${videoTime}s`;
-                        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
-
-                        results.push(video.titulo);
-                        document.getElementById('results').innerHTML += `
-                            <div style="display:flex; gap:10px">
-                                <div style="width: 50%">
-                                    <iframe style="width: 100%; height=100%" height="100%" src="https://www.youtube.com/embed/${videoId}?start=${videoTime}" frameborder="0" allowfullscreen></iframe>
-                                </div>
-                                <div style="width: 45%">
-                                    <p>${video.titulo}</p>
-                                    <img style="width: 60%" src="${thumbnailUrl}" alt="Thumbnail">
-                                    </br>
-                                    <a href="${videoUrlWithTime}" target="_blank">${transcript.text}</br>(Assistir trecho no youtube)</a>
-                                </div>
-                            </div>
-                            <hr>
-                        `;
-
-                    }
-                });
-
-            });
-
-            if (results.length >= LIMIT_RESULTS) {
-                document.getElementById('results').innerHTML += `
-                    <div style="display:flex; gap:10px">
-                        <p>Limite de resultados atingido</p>
-                    </div>
-                    <hr>
-                `;
-            }
-
-            if (results.length == 0) {
-                document.getElementById('results').innerHTML = 'Nenhum resultado encontrado';
+                resultsEl.innerHTML = results.length === 0 ? 'Nenhum resultado encontrado' : html;
+            } catch (error) {
+                console.error(error);
+                resultsEl.innerHTML = 'Erro ao carregar os dados. Verifique se os arquivos JSON estao validos em data/.';
             }
         }
 
@@ -93,15 +163,18 @@
         }
 
         function share() {
-            whats_url = `https://api.whatsapp.com/send/?text=${encodeURI(window.location.href)}&type=phone_number&app_absent=0`;
-            console.log(whats_url);
+            const whats_url = `https://api.whatsapp.com/send/?text=${encodeURI(window.location.href)}&type=phone_number&app_absent=0`;
             window.open(whats_url);
         }
 
         window.onload = async function() {
-            
-            dataInfo = await fetchData('info.json');
-            document.getElementById('info').innerHTML = 'Total de videos indexados: ' + dataInfo.videos + ' (' + dataInfo.dataExecucao + ')';
+            try {
+                const manifesto = await carregarManifesto();
+                const info = manifesto || await fetchJson('info.json');
+                document.getElementById('info').innerHTML = 'Total de videos indexados: ' + info.videos + ' (' + info.dataExecucao + ')';
+            } catch {
+                document.getElementById('info').innerHTML = 'Nao foi possivel carregar informacoes dos videos.';
+            }
 
             const searchText = getQueryParameter('searchText');
             if (searchText) {
